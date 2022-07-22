@@ -12,7 +12,9 @@ app.get( "/", ( req, res ) => {
 
 // })
 
-WeatherApi.point(28.5, -81.4);
+// WeatherApi.point(28.5, -81.4);
+// WeatherApi.forecast(25, 66);
+WeatherApi.observations("KORL");
 
 
 // start the Express server
