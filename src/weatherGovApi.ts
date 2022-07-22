@@ -1,9 +1,10 @@
 import https from 'https'
+import { safeParseRaw } from './dataHandler';
 
 const USER_AGENT = "CAN_I_DO_THIS_ACTIVITY_APP"
 
-// https://api.weather.gov/points/28.5,-81.4
 export const WeatherApi = {
+  // https://api.weather.gov/points/28.5,-81.4
   point: async (lat: number, lon: number) => {
     const options = {
       method: 'GET',
@@ -13,11 +14,15 @@ export const WeatherApi = {
       headers: { 'User-Agent': USER_AGENT }
     };
 
+    let body: Uint8Array[] = [];
     const req = https.request(options, (res) => {
-
       res.on('data', (d) => {
-        const dataString = Buffer.from(d).toString('ascii');
-        console.log('Data from lat long: ', dataString);
+        body.push(d);
+      });
+
+      res.on('end', () => {
+        const data = safeParseRaw(body);
+        console.log('Points data: ', JSON.stringify(data));
       });
     });
 
@@ -38,11 +43,15 @@ export const WeatherApi = {
       headers: { 'User-Agent': USER_AGENT }
     };
 
+    let body: Uint8Array[] = [];
     const req = https.request(options, (res) => {
-
       res.on('data', (d) => {
-        const dataString = Buffer.from(d).toString('ascii');
-        console.log('Forecast data: ', dataString);
+        body.push(d);
+      });
+
+      res.on('end', () => {
+        const data = safeParseRaw(body);
+        console.log('Forecast data: ', JSON.stringify(data));
       });
     });
 
@@ -51,8 +60,6 @@ export const WeatherApi = {
     });
 
     req.end();
-
-    console.log("End of grid request");
   },
 
   // https://api.weather.gov/stations/KORL
@@ -66,11 +73,15 @@ export const WeatherApi = {
       headers: { 'User-Agent': USER_AGENT }
     };
 
+    let body: Uint8Array[] = [];
     const req = https.request(options, (res) => {
-
       res.on('data', (d) => {
-        const dataString = Buffer.from(d).toString('ascii');
-        console.log('Station observations: ', dataString);
+        body.push(d);
+      });
+
+      res.on('end', () => {
+        const data = safeParseRaw(body);
+        console.log('Station observations: ', JSON.stringify(data));
       });
     });
 
@@ -79,7 +90,5 @@ export const WeatherApi = {
     });
 
     req.end();
-
-    console.log("End of grid request");
   }
 }
