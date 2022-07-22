@@ -1,4 +1,5 @@
 import express from "express";
+import { WeatherApi } from "./src/weatherGovApi";
 const app = express();
 const port = 8080; // default port to listen
 
@@ -6,6 +7,13 @@ const port = 8080; // default port to listen
 app.get( "/", ( req, res ) => {
     res.send( "Hello world!" );
 } );
+
+// app.post( "/", ( req, res ) => {
+
+// })
+
+WeatherApi.point(28.5, -81.4);
+
 
 // start the Express server
 app.listen( port, () => {
