@@ -8,13 +8,10 @@ app.get( "/", ( req, res ) => {
     res.send( "Hello world!" );
 } );
 
-// app.post( "/", ( req, res ) => {
-
-// })
-
+// Uncomment these to fetch data!
 // WeatherApi.point(28.5, -81.4);
 // WeatherApi.forecast(25, 66);
-WeatherApi.observations("KORL");
+// WeatherApi.observations("KORL");
 
 
 // start the Express server
