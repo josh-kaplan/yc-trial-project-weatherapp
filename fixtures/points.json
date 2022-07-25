@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://geojson.org/geojson-ld/geojson-context.jsonld",
+    {
+      "@version": "1.1",
+      "wx": "https://api.weather.gov/ontology#",
+      "s": "https://schema.org/",
+      "geo": "http://www.opengis.net/ont/geosparql#",
+      "unit": "http://codes.wmo.int/common/unit/",
+      "@vocab": "https://api.weather.gov/ontology#",
+      "geometry": {
+        "@id": "s:GeoCoordinates",
+        "@type": "geo:wktLiteral"
+      },
+      "city": "s:addressLocality",
+      "state": "s:addressRegion",
+      "distance": {
+        "@id": "s:Distance",
+        "@type": "s:QuantitativeValue"
+      },
+      "bearing": {
+        "@type": "s:QuantitativeValue"
+      },
+      "value": {
+        "@id": "s:value"
+      },
+      "unitCode": {
+        "@id": "s:unitCode",
+        "@type": "@id"
+      },
+      "forecastOffice": {
+        "@type": "@id"
+      },
+      "forecastGridData": {
+        "@type": "@id"
+      },
+      "publicZone": {
+        "@type": "@id"
+      },
+      "county": {
+        "@type": "@id"
+      }
+    }
+  ],
+  "id": "https://api.weather.gov/points/28.5,-81.4",
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -81.4,
+      28.5
+    ]
+  },
+  "properties": {
+    "@id": "https://api.weather.gov/points/28.5,-81.4",
+    "@type": "wx:Point",
+    "cwa": "MLB",
+    "forecastOffice": "https://api.weather.gov/offices/MLB",
+    "gridId": "MLB",
+    "gridX": 25,
+    "gridY": 66,
+    "forecast": "https://api.weather.gov/gridpoints/MLB/25,66/forecast",
+    "forecastHourly": "https://api.weather.gov/gridpoints/MLB/25,66/forecast/hourly",
+    "forecastGridData": "https://api.weather.gov/gridpoints/MLB/25,66",
+    "observationStations": "https://api.weather.gov/gridpoints/MLB/25,66/stations",
+    "relativeLocation": {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.386027,
+          28.497972
+        ]
+      },
+      "properties": {
+        "city": "Holden Heights",
+        "state": "FL",
+        "distance": {
+          "unitCode": "wmoUnit:m",
+          "value": 1383.9522402835
+        },
+        "bearing": {
+          "unitCode": "wmoUnit:degree_(angle)",
+          "value": 279
+        }
+      }
+    },
+    "forecastZone": "https://api.weather.gov/zones/forecast/FLZ045",
+    "county": "https://api.weather.gov/zones/county/FLC095",
+    "fireWeatherZone": "https://api.weather.gov/zones/fire/FLZ045",
+    "timeZone": "America/New_York",
+    "radarStation": "KMLB"
+  }
+}
