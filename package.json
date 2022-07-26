@@ -4,12 +4,13 @@
   "description": "A weather app that uses the Weather.gov API to provide predictions.",
   "main": "dist/server.js",
   "scripts": {
-    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
-    "watch": "tsc -w",
-    "dev": "nodemon server.ts",
+    "lint": "npx tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "npm run webapp:build; npx tsc",
+    "watch": "npx tsc -w",
+    "dev": "npx nodemon server.ts",
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webapp:build": "cd webapp; npm run build; cd ..;",
   },
   "repository": {
     "type": "git",
