@@ -24,18 +24,18 @@ app.get("/api", ( req, res ) => {
  *       "location": [lat, lon],
  *       fields: {
  *           "temperature": {
- *               ideal: { min: 40, max: 70 } 
- *               acceptable: { min: 0, max: 90 }  
+ *               ideal: { min: 40, max: 70 }
+ *               acceptable: { min: 0, max: 90 }
  *           },
  *           "windSpeed": {
- *               ideal: { min: 0, max: 5 } 
- *               acceptable: { min: 0, max: 20 }  
+ *               ideal: { min: 0, max: 5 }
+ *               acceptable: { min: 0, max: 20 }
  *           }
  *       }
  *    }
  *
  * Compute a score (method TBD), that says how good it is to do the activity
- * 
+ *
  * {
  *    scores: [
  *         startTime: "2022-07-22T16:53:00+00:00"
@@ -48,8 +48,25 @@ app.get("/api", ( req, res ) => {
  * }
  */
 app.post("/api/activity", ( req, res ) => {
-    res.send( "Hello world!" );
-} );
+  res.send({
+    scores: [{
+      startTime: "2022-07-22T16:53:00+00:00",
+      overallScore: 95,
+      fields: {
+        "temperature": 20,
+        "windSpeed": 12
+      }
+    },
+    {
+      startTime: "2022-07-22T17:53:00+00:00",
+      overallScore: 95,
+      fields: {
+        "temperature": 20,
+        "windSpeed": 12
+      }
+    }]
+  });
+});
 
 
 // Catch-all route sends all non-valid routes to the React root and the
