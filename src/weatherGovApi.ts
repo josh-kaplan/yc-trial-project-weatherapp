@@ -8,6 +8,9 @@ interface PointsData {
     forecast: string;
   }
 }
+interface StationData {
+  observationStations?: string[];
+}
 
 export const WeatherApi = {
   // https://api.weather.gov/points/28.5,-81.4
@@ -54,6 +57,51 @@ export const WeatherApi = {
       return [gridX, gridY];
     } catch (e) {
       console.log('error getGridXYFromPointData: ', e);
+      return null;
+    }
+  },
+
+  stations: async (gridX: number, gridY: number) => {
+    const options = {
+      method: 'GET',
+      hostname: 'api.weather.gov',
+      path: `/gridpoints/MLB/${gridX},${gridY}/stations`,
+      port: 443,
+      headers: { 'User-Agent': USER_AGENT }
+    };
+
+    let body: Uint8Array[] = [];
+    return new Promise<StationData>((resolve) => {
+      const req = https.request(options, (res) => {
+        res.on('data', (d) => {
+          body.push(d);
+        });
+
+        res.on('end', () => {
+          const data = safeParseRaw(body);
+          resolve(data);
+        });
+      });
+
+      req.on('error', (error) => {
+        console.error(error);
+        resolve(null);
+      });
+
+      req.end();
+    })
+  },
+
+  getStationNameFromStationData: (stationData: StationData) => {
+    if(!(stationData && stationData.observationStations && stationData.observationStations[0])) return null;
+
+    const extractRE = new RegExp('https\:\/\/api\.weather\.gov\/stations\/(.+)')
+    try {
+      const match = stationData.observationStations[0].match(extractRE);
+      const stationName = match[1];
+      return stationName;
+    } catch (e) {
+      console.log('error getStationNameFromStationData: ', e);
       return null;
     }
   },

@@ -63,16 +63,20 @@ app.get("/api/activity", async ( req, res ) => {
       }
     }
   };
-  let scores = null;
 
   const pointsData = await WeatherApi.point(28.5, -81.4);
   const gridXY = WeatherApi.getGridXYFromPointData(pointsData);
   if (gridXY) {
     const forecastData = await WeatherApi.forecast(gridXY[0], gridXY[1]);
     // console.log('forecastData: ', forecastData);
-    const observationData = await WeatherApi.observations("KORL");
-    // console.log('observationData: ', observationData);
-
+    const stationData = await WeatherApi.stations(gridXY[0], gridXY[1]);
+    // console.log('stationData: ', stationData);
+    const stationName = WeatherApi.getStationNameFromStationData(stationData);
+    // console.log('stationName: ', stationName);
+    if (stationName) {
+      const observationData = await WeatherApi.observations(stationName);
+      // console.log('observationData: ', observationData);
+    }
   }
 
   res.send({
