@@ -47,7 +47,34 @@ app.get("/api", ( req, res ) => {
  *    ]
  * }
  */
-app.post("/api/activity", ( req, res ) => {
+app.get("/api/activity", async ( req, res ) => {
+  console.log('req.body: ', req.body);
+  const body = {
+    "name": "kite",
+    "location": [28.5, -81.4],
+    fields: {
+      "temperature": {
+        ideal: { min: 40, max: 70 },
+        acceptable: { min: 0, max: 90 }
+      },
+      "windSpeed": {
+        ideal: { min: 0, max: 5 },
+        acceptable: { min: 0, max: 20 }
+      }
+    }
+  };
+  let scores = null;
+
+  const pointsData = await WeatherApi.point(28.5, -81.4);
+  const gridXY = WeatherApi.getGridXYFromPointData(pointsData);
+  if (gridXY) {
+    const forecastData = await WeatherApi.forecast(gridXY[0], gridXY[1]);
+    // console.log('forecastData: ', forecastData);
+    const observationData = await WeatherApi.observations("KORL");
+    // console.log('observationData: ', observationData);
+
+  }
+
   res.send({
     scores: [{
       startTime: "2022-07-22T16:53:00+00:00",

@@ -43,7 +43,7 @@ export const WeatherApi = {
 
   },
 
-  getForecastFromPointData: (pointsData: PointsData) => {
+  getGridXYFromPointData: (pointsData: PointsData) => {
     if (!(pointsData && pointsData.properties && pointsData.properties.forecast)) return null;
 
     const extractRE = new RegExp('https\:\/\/api\.weather\.gov\/gridpoints\/MLB\/(\\d+),(\\d+)\/forecast')
@@ -53,7 +53,7 @@ export const WeatherApi = {
       const gridY = parseInt(match[2]);
       return [gridX, gridY];
     } catch (e) {
-      console.log('error getForecastFromPointData: ', e);
+      console.log('error getGridXYFromPointData: ', e);
       return null;
     }
   },
