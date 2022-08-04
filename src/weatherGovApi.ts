@@ -15,22 +15,26 @@ export const WeatherApi = {
     };
 
     let body: Uint8Array[] = [];
-    const req = https.request(options, (res) => {
-      res.on('data', (d) => {
-        body.push(d);
+    return new Promise((resolve) => {
+      const req = https.request(options, (res) => {
+        res.on('data', (d) => {
+          body.push(d);
+        });
+
+        res.on('end', () => {
+          const data = safeParseRaw(body);
+          resolve(data);
+        });
       });
 
-      res.on('end', () => {
-        const data = safeParseRaw(body);
-        console.log('Points data: ', JSON.stringify(data));
+      req.on('error', (error) => {
+        console.error(error);
+        resolve(null);
       });
-    });
 
-    req.on('error', (error) => {
-      console.error(error);
-    });
+      req.end();
+    })
 
-    req.end();
   },
 
   // https://api.weather.gov/gridpoints/MLB/25,66
@@ -44,22 +48,25 @@ export const WeatherApi = {
     };
 
     let body: Uint8Array[] = [];
-    const req = https.request(options, (res) => {
-      res.on('data', (d) => {
-        body.push(d);
+    return new Promise((resolve) => {
+      const req = https.request(options, (res) => {
+        res.on('data', (d) => {
+          body.push(d);
+        });
+
+        res.on('end', () => {
+          const data = safeParseRaw(body);
+          resolve(data);
+        });
       });
 
-      res.on('end', () => {
-        const data = safeParseRaw(body);
-        console.log('Forecast data: ', JSON.stringify(data));
+      req.on('error', (error) => {
+        console.error(error);
+        resolve(null);
       });
-    });
 
-    req.on('error', (error) => {
-      console.error(error);
-    });
-
-    req.end();
+      req.end();
+    })
   },
 
   // https://api.weather.gov/stations/KORL
@@ -74,21 +81,24 @@ export const WeatherApi = {
     };
 
     let body: Uint8Array[] = [];
-    const req = https.request(options, (res) => {
-      res.on('data', (d) => {
-        body.push(d);
+    return new Promise((resolve) => {
+      const req = https.request(options, (res) => {
+        res.on('data', (d) => {
+          body.push(d);
+        });
+
+        res.on('end', () => {
+          const data = safeParseRaw(body);
+          resolve(data);
+        });
       });
 
-      res.on('end', () => {
-        const data = safeParseRaw(body);
-        console.log('Station observations: ', JSON.stringify(data));
+      req.on('error', (error) => {
+        console.error(error);
+        resolve(null);
       });
-    });
 
-    req.on('error', (error) => {
-      console.error(error);
-    });
-
-    req.end();
+      req.end();
+    })
   }
 }
