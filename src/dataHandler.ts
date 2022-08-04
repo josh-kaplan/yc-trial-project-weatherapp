@@ -13,7 +13,7 @@ export const safeParseJson = (dataString: string) => {
 }
 
 export const safeParseRaw = (bufferData: Uint8Array[]) => {
-  let jsonData = {};
+  let jsonData = {} as any;
   try {
     const dataString = Buffer.concat(bufferData).toString('ascii');
     jsonData = safeParseJson(dataString);

@@ -3,6 +3,12 @@ import { safeParseRaw } from './dataHandler';
 
 const USER_AGENT = "CAN_I_DO_THIS_ACTIVITY_APP"
 
+interface PointsData {
+  properties?: {
+    forecast: string;
+  }
+}
+
 export const WeatherApi = {
   // https://api.weather.gov/points/28.5,-81.4
   point: async (lat: number, lon: number) => {
@@ -15,7 +21,7 @@ export const WeatherApi = {
     };
 
     let body: Uint8Array[] = [];
-    return new Promise((resolve) => {
+    return new Promise<PointsData>((resolve) => {
       const req = https.request(options, (res) => {
         res.on('data', (d) => {
           body.push(d);
@@ -35,6 +41,21 @@ export const WeatherApi = {
       req.end();
     })
 
+  },
+
+  getForecastFromPointData: (pointsData: PointsData) => {
+    if (!(pointsData && pointsData.properties && pointsData.properties.forecast)) return null;
+
+    const extractRE = new RegExp('https\:\/\/api\.weather\.gov\/gridpoints\/MLB\/(\\d+),(\\d+)\/forecast')
+    try {
+      const match = pointsData.properties.forecast.match(extractRE);
+      const gridX = parseInt(match[1]);
+      const gridY = parseInt(match[2]);
+      return [gridX, gridY];
+    } catch (e) {
+      console.log('error getForecastFromPointData: ', e);
+      return null;
+    }
   },
 
   // https://api.weather.gov/gridpoints/MLB/25,66
