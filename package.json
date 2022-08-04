@@ -10,7 +10,7 @@
     "dev": "npx nodemon server.ts",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webapp:build": "cd webapp; npm run build; cd ..;",
+    "webapp:build": "cd webapp; npm i; npm run build; cd ..;"
   },
   "repository": {
     "type": "git",
