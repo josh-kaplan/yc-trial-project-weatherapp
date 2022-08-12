@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import { WeatherApi } from "./src/weatherGovApi";
+import Scores from "./src/scores";
 const app = express();
 const port = 8080; // default port to listen
 
@@ -77,8 +78,10 @@ app.get("/api/activity", async ( req, res ) => {
       const observationData = await WeatherApi.observations(stationName);
       // console.log('observationData: ', observationData);
     }
+    return res.send(Scores.scoreActivity(body.fields, forecastData));
   }
 
+  // Else send dummy data.  Todo: send empty scores.
   res.send({
     scores: [{
       startTime: "2022-07-22T16:53:00+00:00",
